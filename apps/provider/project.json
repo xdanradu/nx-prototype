@@ -1,0 +1,80 @@
+{
+  "root": "apps/provider",
+  "sourceRoot": "apps/provider/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/provider",
+        "index": "apps/provider/src/index.html",
+        "baseHref": "/",
+        "main": "apps/provider/src/main.tsx",
+        "polyfills": "apps/provider/src/polyfills.ts",
+        "tsConfig": "apps/provider/tsconfig.app.json",
+        "assets": ["apps/provider/src/favicon.ico", "apps/provider/src/assets"],
+        "styles": ["apps/provider/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/provider/src/environments/environment.ts",
+              "with": "apps/provider/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "provider:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "provider:build:development"
+        },
+        "production": {
+          "buildTarget": "provider:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/provider/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/provider"],
+      "options": {
+        "jestConfig": "apps/provider/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
